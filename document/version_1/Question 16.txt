@@ -1,0 +1,30 @@
+
+ Génération de monstres immobiles : 
+
+Critères de validation
+• Il est possible de construire un labyrinthe par défaut contenant quelques monstres
+(le labyrinthe par défaut est à dénir).
+• Les monstres sont créés sur des cases vides.
+• Il n'est pas possible de générer des monstres sur des cases non vides (position du
+joueur, d'autres monstres ou de murs)
+• Les monstres doivent apparaitre dans l'interface graphique sous la forme d'un
+cercle rouge.
+
+
+Déplacement aléatoire des monstres:
+
+• A chaque évolution du jeu, que le joueur se déplace ou non, les monstres se déplacent.
+• Les monstres sont bloqués par les obstacles. S'ils ont choisi de se diriger vers un
+obstacle (mur, joueur, ...), leur mouvement est alors annulé (sauf s'il s'agit de
+fantômes).
+• Deux monstres ou un monstre et un joueur ne peuvent pas se trouver sur la même
+case (Si la tache Collision entre monstre est fonctionnelle).
+• A chaque évolution, tous les monstres tentent de se déplacer.
+• L'interface graphique se met à jour en fonction des déplacements des Monstres.
+
+
+Collision avec un monstre :
+
+• La collision fonctionne dans les 4 directions.
+• Si la case est vide, le personnage avance.
+• Le monstre se déplace à chaque fois après le joueur.
