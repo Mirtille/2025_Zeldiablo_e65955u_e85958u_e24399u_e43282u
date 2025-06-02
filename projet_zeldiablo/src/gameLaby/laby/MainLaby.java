@@ -10,7 +10,7 @@ public class MainLaby {
 
     int width = 800;
     int height = 600;
-    int pFPS = 20;
+    int pFPS = 60;
 
     LabyJeu jeu = new LabyJeu("labySimple/laby1.txt");
     LabyDessin dessin = new LabyDessin();
