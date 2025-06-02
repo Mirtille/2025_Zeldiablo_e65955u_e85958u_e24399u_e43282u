@@ -168,7 +168,7 @@ public class Labyrinthe {
             String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
             int a = (int) (Math.random() * (4));
             int[] suivante = getSuivant(courante[0], courante[1], action[a]);
-            while (this.murs[suivante[0]][suivante[1]]) {
+            while (this.murs[suivante[0]][suivante[1]] && this.pj.etrePresent(suivante[0], suivante[1])) {
                 a = (int) (Math.random() * (4));
                 suivante = getSuivant(courante[0], courante[1], action[a]);
             }
@@ -179,7 +179,7 @@ public class Labyrinthe {
     }
 
     public void genererMonstres() {
-        
+
     }
 
     public boolean etreMonstre(int i , int j) {
