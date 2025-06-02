@@ -3,6 +3,9 @@ package gameLaby.laby;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * classe labyrinthe. represente un labyrinthe avec
@@ -17,6 +20,7 @@ public class Labyrinthe {
     public static final char MUR = 'X';
     public static final char PJ = 'P';
     public static final char VIDE = '.';
+    public static final char MONSTER = 'M';
 
     /**
      * constantes actions possibles
@@ -35,6 +39,8 @@ public class Labyrinthe {
      * les murs du labyrinthe
      */
     public boolean[][] murs;
+
+    public List<Slime> monstres ;
 
     /**
      * retourne la case suivante selon une actions
@@ -90,6 +96,7 @@ public class Labyrinthe {
         // creation labyrinthe vide
         this.murs = new boolean[nbColonnes][nbLignes];
         this.pj = null;
+        this.monstres = new ArrayList<Slime>();
 
         // lecture des cases
         String ligne = bfRead.readLine();
@@ -116,7 +123,9 @@ public class Labyrinthe {
                         // ajoute PJ
                         this.pj = new Perso(colonne, numeroLigne);
                         break;
-
+                    case MONSTER:
+                        this.monstres.add(new Slime(colonne, numeroLigne)) ;
+                        break;
                     default:
                         throw new Error("caractere inconnu " + c);
                 }
@@ -151,6 +160,26 @@ public class Labyrinthe {
             this.pj.x = suivante[0];
             this.pj.y = suivante[1];
         }
+    }
+
+    public void deplacerMonstres() {
+        for (Slime m : monstres) {
+            int[] courante = {m.getX(), m.getY()};
+            String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
+            int a = (int) (Math.random() * (4));
+            int[] suivante = getSuivant(courante[0], courante[1], action[a]);
+            if (!this.murs[suivante[0]][suivante[1]]) {
+                m.deplacerMonstre(suivante);
+            }
+        }
+    }
+
+    public boolean etreMonstre(int i , int j) {
+        for(Slime m : monstres) {
+            return (m.getX() == i && m.getY() == j);
+        }
+
+        return false;
     }
 
 

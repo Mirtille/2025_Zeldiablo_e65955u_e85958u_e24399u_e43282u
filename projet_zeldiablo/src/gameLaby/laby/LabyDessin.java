@@ -17,22 +17,29 @@ public class LabyDessin implements DessinJeu {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         //murs
-        for (int i = 0 ; i < laby.getLabyrinthe().getLength() ; i++) {
-            for (int j = 0 ; j < laby.getLabyrinthe().getLengthY() ; j++) {
-                int x = i * (int) laby.WIDTH / laby.getLabyrinthe().getLength() ;
-                int y = j * laby.HEIGHT / laby.getLabyrinthe().getLengthY() ;
-                int h = laby.WIDTH / laby.getLabyrinthe().getLength() + 1 ;
-                int l = laby.HEIGHT / laby.getLabyrinthe().getLengthY() + 1 ;
-                if (laby.getLabyrinthe().getMur(i,j)) {
+        double caseWidth = (double) laby.WIDTH / laby.getLabyrinthe().getLength();
+        double caseHeight = (double) laby.HEIGHT / laby.getLabyrinthe().getLengthY();
+
+        for (int i = 0; i < laby.getLabyrinthe().getLength(); i++) {
+            for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
+                double x = i * caseWidth;
+                double y = j * caseHeight;
+
+                if (laby.getLabyrinthe().getMur(i, j)) {
                     gc.setFill(Color.BLACK);
-                    gc.fillRect(x, y, h, l);
+                    gc.fillRect(x, y, caseWidth, caseHeight);
                 }
+
                 if (laby.getLabyrinthe().pj.etrePresent(i, j)) {
                     gc.setFill(Color.RED);
-                    gc.fillOval(x, y, h, l);
+                    gc.fillOval(x, y, caseWidth, caseHeight);
+                }
+
+                if (laby.getLabyrinthe().etreMonstre(i, j)) {
+                    gc.setFill(Color.BLUE);
+                    gc.fillOval(x, y, caseWidth, caseHeight);
                 }
             }
         }
-
     }
 }
