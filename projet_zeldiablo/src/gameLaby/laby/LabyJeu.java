@@ -31,6 +31,8 @@ public class LabyJeu implements Jeu {
             this.labyrinthe.deplacerPerso(Labyrinthe.HAUT);
         }
 
+        this.labyrinthe.deplacerMonstres();
+
     }
 
     @Override
