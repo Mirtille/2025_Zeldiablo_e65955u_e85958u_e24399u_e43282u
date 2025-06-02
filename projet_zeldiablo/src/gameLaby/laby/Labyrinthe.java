@@ -117,6 +117,7 @@ public class Labyrinthe {
                         this.pj = new Perso(colonne, numeroLigne);
                         break;
 
+
                     default:
                         throw new Error("caractere inconnu " + c);
                 }
