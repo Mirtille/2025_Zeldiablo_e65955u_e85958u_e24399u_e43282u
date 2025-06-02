@@ -10,6 +10,8 @@ public class Perso {
      * position du personnage
      */
     int x, y;
+    int vie;
+    int attaque;
 
     /**
      * constructeur
@@ -17,9 +19,11 @@ public class Perso {
      * @param dx position selon x
      * @param dy position selon y
      */
-    public Perso(int dx, int dy) {
+    public Perso(int dx, int dy, int pv , int atq) {
         this.x = dx;
         this.y = dy;
+        this.vie = pv;
+        this.attaque = atq;
     }
 
     /**
@@ -52,5 +56,17 @@ public class Perso {
     public int getY() {
         //getter
         return this.y;
+    }
+    /**
+     * @return vie du joueur
+     */
+    public int getVie() {
+        return this.vie;
+    }
+    /**
+     * @return attaque du joueur
+     */
+    public int getAttaque() {
+        return this.attaque;
     }
 }

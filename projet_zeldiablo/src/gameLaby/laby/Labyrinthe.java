@@ -161,6 +161,7 @@ public class Labyrinthe {
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
 
+
         // si c'est pas un mur, on effectue le deplacement
         if (!this.murs[suivante[0]][suivante[1]]) {
             // on met a jour personnage
