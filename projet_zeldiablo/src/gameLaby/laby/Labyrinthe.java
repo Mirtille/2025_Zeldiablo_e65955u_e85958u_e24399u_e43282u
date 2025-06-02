@@ -180,7 +180,7 @@ public class Labyrinthe {
             String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
             int a = (int) (Math.random() * (4));
             int[] suivante = getSuivant(courante[0], courante[1], action[a]);
-            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante[0], suivante[1])) {
+            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante[0], suivante[1]) & !etreMonstre(suivante[0], suivante[1])) {
                 m.deplacerMonstre(suivante);
             }
         }
@@ -191,11 +191,13 @@ public class Labyrinthe {
     }
 
     public boolean etreMonstre(int i , int j) {
+        boolean tmp = false;
         for(Slime m : monstres) {
-            return (m.getX() == i && m.getY() == j);
+            if(m.getX() == i && m.getY() == j) {
+                tmp = true;
+            }
         }
-
-        return false;
+        return tmp ;
     }
 
     public boolean etrePiege(int i , int j) {

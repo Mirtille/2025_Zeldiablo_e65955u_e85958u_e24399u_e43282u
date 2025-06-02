@@ -9,7 +9,7 @@ public class Piege implements CasesSpeciale {
         this.y = y;
     }
 
-    public void declancher() {
+    public void declencher() {
         System.out.println("piege declencher");
     }
     public boolean etreActiver(int i, int j) {
