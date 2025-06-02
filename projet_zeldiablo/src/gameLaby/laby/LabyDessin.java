@@ -6,8 +6,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import moteurJeu.DessinJeu;
 import moteurJeu.Jeu;
+import javafx.scene.image.Image;
 
 public class LabyDessin implements DessinJeu {
+
+
     @Override
     public void dessinerJeu(Jeu jeu, Canvas canvas) {
         LabyJeu laby = (LabyJeu) jeu;
@@ -16,6 +19,9 @@ public class LabyDessin implements DessinJeu {
         gc.setFill(Color.LIGHTGRAY);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+        Image imgPiege = new Image("file:img/piege.jpg");
+        Image imgPerso = new Image("file:img/steve.jpg");
+        Image imgMonstre = new Image("file:img/zombie.jpg");
         //murs
         double caseWidth = (double) laby.WIDTH / laby.getLabyrinthe().getLength();
         double caseHeight = (double) laby.HEIGHT / laby.getLabyrinthe().getLengthY();
@@ -31,18 +37,15 @@ public class LabyDessin implements DessinJeu {
                 }
 
                 if (laby.getLabyrinthe().etrePiege(i, j)) {
-                    gc.setFill(Color.PURPLE);
-                    gc.fillRect(x, y, caseWidth, caseHeight);
+                    gc.drawImage(imgPiege, x, y, caseWidth, caseHeight);
                 }
 
                 if (laby.getLabyrinthe().pj.etrePresent(i, j)) {
-                    gc.setFill(Color.RED);
-                    gc.fillOval(x, y, caseWidth, caseHeight);
+                    gc.drawImage(imgPerso, x, y, caseWidth, caseHeight);
                 }
 
                 if (laby.getLabyrinthe().etreMonstre(i, j)) {
-                    gc.setFill(Color.BLUE);
-                    gc.fillOval(x, y, caseWidth, caseHeight);
+                    gc.drawImage(imgMonstre, x, y, caseWidth, caseHeight);
                 }
             }
         }

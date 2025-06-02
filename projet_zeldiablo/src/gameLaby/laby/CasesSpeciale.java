@@ -1,7 +1,7 @@
 package gameLaby.laby;
 
 public interface CasesSpeciale {
-    public void declancher();
+    public void declencher();
     public boolean etreActiver(int i, int j);
 }
 

@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * classe labyrinthe. represente un labyrinthe avec
@@ -131,7 +130,7 @@ public class Labyrinthe {
                         this.monstres.add(new Slime(colonne, numeroLigne)) ;
                         break;
                     case PIEGE:
-                        this.cases.add(new Pieges(colonne, numeroLigne)) ;
+                        this.cases.add(new Piege(colonne, numeroLigne)) ;
                         break;
 
                         default:
@@ -170,7 +169,7 @@ public class Labyrinthe {
         }
         for(CasesSpeciale cs : this.cases) {
             if(cs.etreActiver(suivante[0], suivante[1])) {
-                cs.declancher();
+                cs.declencher();
             }
         }
     }
@@ -201,7 +200,7 @@ public class Labyrinthe {
 
     public boolean etrePiege(int i , int j) {
         for(CasesSpeciale m : cases) {
-            Pieges p = (Pieges) m;
+            Piege p = (Piege) m;
             return (p.getX() == i && p.getY() == j);
         }
 

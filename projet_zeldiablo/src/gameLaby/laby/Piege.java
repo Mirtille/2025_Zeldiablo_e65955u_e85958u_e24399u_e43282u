@@ -1,10 +1,10 @@
 package gameLaby.laby;
 
-public class Pieges implements CasesSpeciale {
+public class Piege implements CasesSpeciale {
 
     int x,y;
 
-    public Pieges(int x, int y) {
+    public Piege(int x, int y) {
         this.x = x;
         this.y = y;
     }
