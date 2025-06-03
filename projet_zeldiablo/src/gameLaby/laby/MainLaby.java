@@ -12,7 +12,7 @@ public class MainLaby {
     int height = 600;
     int pFPS = 20;
 
-    LabyJeu jeu = new LabyJeu("labySimple/laby1.txt");
+    LabyJeu jeu = new LabyJeu("labySimple/labydefault.txt");
     LabyDessin dessin = new LabyDessin();
 
         MoteurJeu.setTaille(width,height);
