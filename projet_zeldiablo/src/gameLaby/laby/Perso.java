@@ -44,15 +44,6 @@ public class Perso extends Entite {
             }
     }
 
-
-
-    public boolean etreMort(){
-        if (this.pv <= 0){
-            return true;
-        }
-        return false;
-    }
-
     public String toString() {
         return "Steve" + super.toString() ;
     }

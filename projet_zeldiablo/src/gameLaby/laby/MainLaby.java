@@ -21,6 +21,10 @@ public class MainLaby {
         MoteurJeu.setFPS(pFPS);
 
     // lancement du jeu
+
+        while(!jeu.getLabyrinthe().pj.etreMort()){
+
+        }
         MoteurJeu.launch(jeu,dessin);
 
 

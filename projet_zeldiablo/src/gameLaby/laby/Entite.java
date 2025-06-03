@@ -41,6 +41,13 @@ public abstract class Entite {
     public String toString() {
         return " a " + pv + "." ;
     }
+
+    public boolean etreMort(){
+        if (this.pv <= 0){
+            return true;
+        }
+        return false;
+    }
 }
 
 
