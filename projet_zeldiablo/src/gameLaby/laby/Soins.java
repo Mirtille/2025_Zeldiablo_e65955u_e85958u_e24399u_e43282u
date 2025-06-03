@@ -10,7 +10,7 @@ public class Soins implements CasesSpeciale {
     }
 
     public void declencher() {
-        System.out.println("Teleporteur declencher");
+        System.out.println("Soins declencher");
     }
     public boolean etreActiver(int i, int j) {
         return x == i && y == j;

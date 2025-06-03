@@ -37,6 +37,10 @@ public class LabyDessin implements DessinJeu {
                 if (laby.getLabyrinthe().getMur(i, j)) {
                     gc.drawImage(imgPierre, x, y, caseWidth, caseHeight);
                 }
+                if (laby.getLabyrinthe().etreSoins(i, j)) {
+                    gc.setFill(Color.GREEN);
+                    gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                }
 
                 if (laby.getLabyrinthe().etrePiege(i, j)) {
                     gc.drawImage(imgPiege, x, y, caseWidth, caseHeight);
