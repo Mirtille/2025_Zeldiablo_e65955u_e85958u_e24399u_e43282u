@@ -191,6 +191,7 @@ public class Labyrinthe {
             String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
             int a = (int) (Math.random() * (4));
             int[] suivante = getSuivant(courante[0], courante[1], action[a]);
+            m.ancienM = action[a];
             if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !(getZombie(suivante[0], suivante[1])!= null)) {
                 m.deplacerMonstre(suivante);
             }
@@ -206,8 +207,33 @@ public class Labyrinthe {
     }
 
     public void genererMonstres(int nombresMonstres) {
+        int compteur = 0;
+        while (compteur < nombresMonstres) {
+            int i = (int) (Math.random() * this.getLength());
+            int j = (int) (Math.random() * this.getLengthY());
+            if (etreVide(i, j)) {
+                compteur++;
+                this.monstres.add(new Zombie(i, j));
+            }
+        }
+    }
 
-
+    public boolean etreVide(int x, int y) {
+        boolean etreVide = true ;
+        int[] pose = {x, y};
+        if (this.getMur(x, y)) {
+            etreVide = false;
+        }
+        if (pj.etrePresent((pose))) {
+            etreVide = false;
+        }
+        if (getZombie(pose[0], pose[1]) != null) {
+            etreVide = false;
+        }
+        if (contientCase(Piege.class, x, y) || contientCase(Piege.class, x, y) || contientCase(Piege.class, x, y )) {
+            etreVide = false;
+        }
+        return etreVide;
     }
 
     public Zombie getZombie(int i , int j) {
@@ -222,48 +248,18 @@ public class Labyrinthe {
         return null;
     }
 
-    public boolean etrePiege(int i , int j) {
-        boolean tmp = false;
-        for(CasesSpeciale m : cases) {
-            if (m instanceof Piege) {
-                Piege p = (Piege) m;
-                if (p.t) {
-                    if (p.getX() == i && p.getY() == j) {
-                        tmp = true;
-                    }
+    public boolean contientCase(Class<?> type, int i, int j) {
+        for (CasesSpeciale m : cases) {
+            if (type.isInstance(m) && m.getX() == i && m.getY() == j) {
+                if (m instanceof Piege p) {
+                    return p.t; // pour les pièges, il faut qu’ils soient activés
                 }
+                return true; // pour les autres types, pas de condition spéciale
             }
         }
-        return tmp;
+        return false;
     }
 
-    public boolean etreTeleporteur(int i , int j) {
-        boolean tmp = false;
-        for(CasesSpeciale m : cases) {
-            if (m instanceof Teleporteur) {
-                Teleporteur t = (Teleporteur) m;
-                if (t.getX() == i && t.getY() == j) {
-                    tmp = true;
-                }
-            }
-        }
-
-        return tmp ;
-    }
-
-    public boolean etreSoins(int i , int j) {
-        boolean tmp = false;
-        for(CasesSpeciale m : cases) {
-            if (m instanceof Soins) {
-                Soins s = (Soins) m;
-                if (s.getX() == i && s.getY() == j) {
-                    tmp = true;
-                }
-            }
-        }
-
-        return tmp ;
-    }
 
 
     /**

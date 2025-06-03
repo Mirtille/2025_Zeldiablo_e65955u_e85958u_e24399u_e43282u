@@ -8,6 +8,8 @@ import moteurJeu.DessinJeu;
 import moteurJeu.Jeu;
 import javafx.scene.image.Image;
 
+import static gameLaby.laby.Labyrinthe.*;
+
 public class LabyDessin implements DessinJeu {
 
 
@@ -20,8 +22,14 @@ public class LabyDessin implements DessinJeu {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         Image imgPiege = new Image("file:img/piege.jpg");
-        Image imgPerso = new Image("file:img/steve.jpg");
-        Image imgMonstre = new Image("file:img/zombie.jpg");
+        Image imgPersoH = new Image("file:img/haut.png");
+        Image imgPersoB = new Image("file:img/bas.png");
+        Image imgPersoD = new Image("file:img/droit.png");
+        Image imgPersoG = new Image("file:img/gauche.png");
+        Image imgZombieH = new Image("file:img/zombieHaut.png");
+        Image imgZombieB = new Image("file:img/zombieBas.png");
+        Image imgZombieD = new Image("file:img/zombieDroit.png");
+        Image imgZombieG = new Image("file:img/zombieGauche.png");
         Image imgTeleporteur = new Image("file:img/Teleporteur.jpg");
         Image imgPierre = new Image("file:img/Pierre.png");
         //murs
@@ -37,24 +45,54 @@ public class LabyDessin implements DessinJeu {
                 if (laby.getLabyrinthe().getMur(i, j)) {
                     gc.drawImage(imgPierre, x, y, caseWidth, caseHeight);
                 }
-                if (laby.getLabyrinthe().etreSoins(i, j)) {
+                if (laby.getLabyrinthe().contientCase(Soins.class, i, j)) {
                     gc.setFill(Color.GREEN);
                     gc.fillRect(x, y, caseWidth, caseHeight);
                 }
 
-                if (laby.getLabyrinthe().etrePiege(i, j)) {
+                if (laby.getLabyrinthe().contientCase(Piege.class, i, j)) {
                     gc.drawImage(imgPiege, x, y, caseWidth, caseHeight);
                 }
 
                 if (laby.getLabyrinthe().pj.etrePresent(p)) {
-                    gc.drawImage(imgPerso, x, y, caseWidth, caseHeight);
+                    switch(laby.getLabyrinthe().pj.ancienM) {
+                        case HAUT:
+                            gc.drawImage(imgPersoH, x, y, caseWidth, caseHeight);
+                            break;
+                        case BAS:
+                            gc.drawImage(imgPersoB, x, y, caseWidth, caseHeight);
+                            break;
+                        case GAUCHE:
+                            gc.drawImage(imgPersoG, x, y, caseWidth, caseHeight);
+                            break;
+                        case DROITE:
+                            gc.drawImage(imgPersoD, x, y, caseWidth, caseHeight);
+                            break;
+                        default:
+                            gc.drawImage(imgPersoB, x, y, caseWidth, caseHeight);
+                    }
                 }
 
                 if (laby.getLabyrinthe().getZombie(i, j) != null) {
-                    gc.drawImage(imgMonstre, x, y, caseWidth, caseHeight);
+                    switch(laby.getLabyrinthe().getZombie(i,j).ancienM) {
+                        case HAUT:
+                            gc.drawImage(imgZombieH, x, y, caseWidth, caseHeight);
+                            break;
+                        case BAS:
+                            gc.drawImage(imgZombieB, x, y, caseWidth, caseHeight);
+                            break;
+                        case GAUCHE:
+                            gc.drawImage(imgZombieG, x, y, caseWidth, caseHeight);
+                            break;
+                        case DROITE:
+                            gc.drawImage(imgZombieD, x, y, caseWidth, caseHeight);
+                            break;
+                        default:
+                            gc.drawImage(imgZombieB, x, y, caseWidth, caseHeight);
+                    }
                 }
 
-                if (laby.getLabyrinthe().etreTeleporteur(i, j)) {
+                if (laby.getLabyrinthe().contientCase(Teleporteur.class, i, j)) {
                     gc.drawImage(imgTeleporteur, x, y, caseWidth, caseHeight);
                 }
             }

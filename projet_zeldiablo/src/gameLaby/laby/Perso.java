@@ -21,7 +21,6 @@ public class Perso extends Entite {
     }
 
     public void attaque(Labyrinthe labyrinthe) {
-        if (ancienM != null) {
             int[] pose = null ;
             switch (ancienM) {
                 case HAUT:
@@ -43,8 +42,6 @@ public class Perso extends Entite {
                     z.subirDegat(force);
                 }
             }
-        }
-
     }
 
 

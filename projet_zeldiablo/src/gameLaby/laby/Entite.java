@@ -1,5 +1,7 @@
 package gameLaby.laby;
 
+import static gameLaby.laby.Labyrinthe.BAS;
+
 public abstract class Entite {
 
     int pv ;
@@ -13,7 +15,7 @@ public abstract class Entite {
         this.y = dy;
         this.pv = pv;
         this.force = atq;
-        this.ancienM = null;
+        this.ancienM = BAS;
     }
 
     public boolean etrePresent (int[] suivante) {
