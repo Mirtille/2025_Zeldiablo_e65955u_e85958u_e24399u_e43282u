@@ -22,6 +22,7 @@ public class Labyrinthe {
     public static final char MONSTER = 'M';
     public static final char PIEGE = 'O';
     public static final char TELEPORTEUR = 'T';
+    public static final char SOINS = 'S';
 
     /**
      * constantes actions possibles
@@ -136,6 +137,9 @@ public class Labyrinthe {
                     case TELEPORTEUR:
                         this.cases.add(new Teleporteur(colonne, numeroLigne)) ;
                         break;
+                    case SOINS:
+                        this.cases.add(new Soins(colonne, numeroLigne));
+                        break;
 
                         default:
                         throw new Error("caractere inconnu " + c);
@@ -175,6 +179,12 @@ public class Labyrinthe {
         for(CasesSpeciale cs : this.cases) {
             if(cs.etreActiver(suivante[0], suivante[1])) {
                 cs.declencher();
+            }
+            if(etrePiege(suivante[0], suivante[1])) {
+                pj.vie -= 5;
+            }
+            if(etreSoins(suivante[0], suivante[1])) {
+                pj.vie += 5;
             }
         }
     }
@@ -234,6 +244,20 @@ public class Labyrinthe {
             if (m instanceof Teleporteur) {
                 Teleporteur t = (Teleporteur) m;
                 if (t.getX() == i && t.getY() == j) {
+                    tmp = true;
+                }
+            }
+        }
+
+        return tmp ;
+    }
+
+    public boolean etreSoins(int i , int j) {
+        boolean tmp = false;
+        for(CasesSpeciale m : cases) {
+            if (m instanceof Soins) {
+                Soins s = (Soins) m;
+                if (s.getX() == i && s.getY() == j) {
                     tmp = true;
                 }
             }

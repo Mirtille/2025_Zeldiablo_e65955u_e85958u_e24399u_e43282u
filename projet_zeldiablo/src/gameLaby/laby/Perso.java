@@ -34,7 +34,6 @@ public class Perso {
      * @return true si le personnage est bien en (dx,dy)
      */
     public boolean etrePresent(int dx, int dy) {
-
         return (this.x == dx && this.y == dy);
     }
 
@@ -68,5 +67,9 @@ public class Perso {
      */
     public int getAttaque() {
         return this.attaque;
+    }
+
+    public String toString() {
+        return "points de vie : " + this.vie + " attaque : " + this.attaque;
     }
 }

@@ -1,31 +1,17 @@
 package gameLaby.laby;
 
-public class Piege implements CasesSpeciale {
+public class Soins {
 
     int x,y;
-    boolean t ;
 
-    /**
-     * @param x
-     * @param y
-     */
-    public Piege(int x, int y) {
+    public Soins(int x, int y) {
         this.x = x;
         this.y = y;
-        this.t = false;
     }
 
     public void declencher() {
-        System.out.println("Piege declencher");
-
-        this.t = true;
+        System.out.println("Teleporteur declencher");
     }
-
-    /**
-     * @param i
-     * @param j
-     * @return
-     */
     public boolean etreActiver(int i, int j) {
         return x == i && y == j;
     }
@@ -37,6 +23,4 @@ public class Piege implements CasesSpeciale {
     public int getY() {
         return y;
     }
-
-
 }
