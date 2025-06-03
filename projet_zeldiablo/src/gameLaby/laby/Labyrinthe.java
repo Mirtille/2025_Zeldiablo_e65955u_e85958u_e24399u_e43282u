@@ -186,20 +186,22 @@ public class Labyrinthe {
     }
 
     public void deplacerMonstres() {
-        for (Monstre m : monstres) {
-            int[] courante = {m.getX(), m.getY()};
-            String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
-            int a = (int) (Math.random() * (4));
-            int[] suivante = getSuivant(courante[0], courante[1], action[a]);
-            m.ancienM = action[a];
-            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !(getZombie(suivante[0], suivante[1])!= null)) {
-                m.deplacerMonstre(suivante);
-            }
-            if (m.etrePresent(suivante)) {
-                for (CasesSpeciale cs : this.cases) {
-                    if (cs.etreActiver(suivante[0], suivante[1])) {
-                        cs.declencher(m);
-                        System.out.println(m.toString());
+        if (1 == (int) (Math.random() * (3))) {
+            for (Monstre m : monstres) {
+                int[] courante = {m.getX(), m.getY()};
+                String[] action = {DROITE, GAUCHE, BAS, HAUT};
+                int a = (int) (Math.random() * (4));
+                int[] suivante = getSuivant(courante[0], courante[1], action[a]);
+                m.ancienM = action[a];
+                if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !(getZombie(suivante[0], suivante[1]) != null)) {
+                    m.deplacerMonstre(suivante);
+                }
+                if (m.etrePresent(suivante)) {
+                    for (CasesSpeciale cs : this.cases) {
+                        if (cs.etreActiver(suivante[0], suivante[1])) {
+                            cs.declencher(m);
+                            System.out.println(m.toString());
+                        }
                     }
                 }
             }

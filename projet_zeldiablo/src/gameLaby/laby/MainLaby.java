@@ -15,7 +15,7 @@ public class MainLaby {
 
     LabyJeu jeu = new LabyJeu("labySimple/labydefault.txt");
     LabyDessin dessin = new LabyDessin();
-    jeu.getLabyrinthe().genererMonstres(20);
+    jeu.getLabyrinthe().genererMonstres(2);
 
         MoteurJeu.setTaille(width,height);
         MoteurJeu.setFPS(pFPS);
