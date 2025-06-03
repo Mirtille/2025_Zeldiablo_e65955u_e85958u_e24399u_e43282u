@@ -31,6 +31,10 @@ public class LabyJeu implements Jeu {
             this.labyrinthe.deplacerPerso(Labyrinthe.HAUT);
         }
 
+        if (clavier.attaque) {
+            this.labyrinthe.attaque();
+        }
+
         this.labyrinthe.deplacerMonstres();
 
     }
