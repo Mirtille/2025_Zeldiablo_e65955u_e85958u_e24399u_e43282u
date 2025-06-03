@@ -9,7 +9,7 @@ public class Teleporteur implements CasesSpeciale{
         this.y = y;
     }
 
-    public void declencher() {
+    public void declencher(Entite entite) {
         System.out.println("Teleporteur declencher");
     }
     public boolean etreActiver(int i, int j) {

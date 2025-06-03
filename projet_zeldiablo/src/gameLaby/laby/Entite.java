@@ -33,5 +33,10 @@ public abstract class Entite {
     public int getY() {
         return y;
     }
+
+    public String toString() {
+        return "Michel a " + pv + "." ;
+    }
 }
+
 

@@ -9,8 +9,9 @@ public class Soins implements CasesSpeciale {
         this.y = y;
     }
 
-    public void declencher() {
+    public void declencher(Entite entite) {
         System.out.println("Soins declencher");
+        entite.pv += 5 ;
     }
     public boolean etreActiver(int i, int j) {
         return x == i && y == j;

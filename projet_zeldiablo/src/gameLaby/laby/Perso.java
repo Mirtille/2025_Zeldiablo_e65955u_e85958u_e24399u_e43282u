@@ -12,7 +12,7 @@ public class Perso extends Entite {
      * @param dx position selon x
      * @param dy position selon y
      */
-    public Perso(int dx, int dy, int pv , int atq) {
+    public Perso(int dx, int dy, int pv, int atq) {
         super(dx, dy, pv, atq);
     }
 }

@@ -15,9 +15,9 @@ public class Piege implements CasesSpeciale {
         this.t = false;
     }
 
-    public void declencher() {
+    public void declencher(Entite entite) {
         System.out.println("Piege declencher");
-
+        entite.pv -= 5 ;
         this.t = true;
     }
 

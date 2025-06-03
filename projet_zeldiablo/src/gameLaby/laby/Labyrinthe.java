@@ -175,16 +175,11 @@ public class Labyrinthe {
             // on met a jour personnage
             this.pj.x = suivante[0];
             this.pj.y = suivante[1];
-        }
-        for(CasesSpeciale cs : this.cases) {
-            if(cs.etreActiver(suivante[0], suivante[1])) {
-                cs.declencher();
-            }
-            if(etrePiege(suivante[0], suivante[1])) {
-                pj.pv -= 5;
-            }
-            if(etreSoins(suivante[0], suivante[1])) {
-                pj.pv += 5;
+            for (CasesSpeciale cs : cases) {
+                if (cs.etreActiver(suivante[0], suivante[1])) {
+                    cs.declencher(this.pj);
+                    System.out.println(this.pj.toString());
+                }
             }
         }
     }
@@ -201,7 +196,8 @@ public class Labyrinthe {
             if (m.etrePresent(suivante)) {
                 for (CasesSpeciale cs : this.cases) {
                     if (cs.etreActiver(suivante[0], suivante[1])) {
-                        cs.declencher();
+                        cs.declencher(m);
+                        System.out.println(m.toString());
                     }
                 }
             }

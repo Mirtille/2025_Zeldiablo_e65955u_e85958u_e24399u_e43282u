@@ -39,7 +39,7 @@ public class LabyDessin implements DessinJeu {
                 }
                 if (laby.getLabyrinthe().etreSoins(i, j)) {
                     gc.setFill(Color.GREEN);
-                    gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    gc.fillRect(x, y, caseWidth, caseHeight);
                 }
 
                 if (laby.getLabyrinthe().etrePiege(i, j)) {
