@@ -21,6 +21,7 @@ public class Labyrinthe {
     public static final char VIDE = '.';
     public static final char MONSTER = 'M';
     public static final char PIEGE = 'O';
+    public static final char TELEPORTEUR = 'T';
 
     /**
      * constantes actions possibles
@@ -132,6 +133,9 @@ public class Labyrinthe {
                     case PIEGE:
                         this.cases.add(new Piege(colonne, numeroLigne)) ;
                         break;
+                    case TELEPORTEUR:
+                        this.cases.add(new Teleporteur(colonne, numeroLigne)) ;
+                        break;
 
                         default:
                         throw new Error("caractere inconnu " + c);
@@ -205,6 +209,15 @@ public class Labyrinthe {
         for(CasesSpeciale m : cases) {
             Piege p = (Piege) m;
             return (p.getX() == i && p.getY() == j);
+        }
+
+        return false;
+    }
+
+    public boolean etreTeleporteur(int i , int j) {
+        for(CasesSpeciale m : cases) {
+            Teleporteur t = (Teleporteur) m;
+            return (t.getX() == i && t.getY() == j);
         }
 
         return false;

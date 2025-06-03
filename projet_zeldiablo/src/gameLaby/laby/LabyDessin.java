@@ -22,6 +22,8 @@ public class LabyDessin implements DessinJeu {
         Image imgPiege = new Image("file:img/piege.jpg");
         Image imgPerso = new Image("file:img/steve.jpg");
         Image imgMonstre = new Image("file:img/zombie.jpg");
+        Image imgTeleporteur = new Image("file:img/Teleporteur.jpg");
+        Image imgPierre = new Image("file:img/Pierre.png");
         //murs
         double caseWidth = (double) laby.WIDTH / laby.getLabyrinthe().getLength();
         double caseHeight = (double) laby.HEIGHT / laby.getLabyrinthe().getLengthY();
@@ -32,8 +34,7 @@ public class LabyDessin implements DessinJeu {
                 double y = j * caseHeight;
 
                 if (laby.getLabyrinthe().getMur(i, j)) {
-                    gc.setFill(Color.BLACK);
-                    gc.fillRect(x, y, caseWidth, caseHeight);
+                    gc.drawImage(imgPierre, x, y, caseWidth, caseHeight);
                 }
 
                 if (laby.getLabyrinthe().etrePiege(i, j)) {
@@ -46,6 +47,10 @@ public class LabyDessin implements DessinJeu {
 
                 if (laby.getLabyrinthe().etreMonstre(i, j)) {
                     gc.drawImage(imgMonstre, x, y, caseWidth, caseHeight);
+                }
+
+                if (laby.getLabyrinthe().etreTeleporteur(i, j)) {
+                    gc.drawImage(imgTeleporteur, x, y, caseWidth, caseHeight);
                 }
             }
         }
