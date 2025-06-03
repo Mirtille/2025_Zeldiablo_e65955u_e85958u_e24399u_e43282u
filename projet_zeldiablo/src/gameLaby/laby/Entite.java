@@ -39,11 +39,6 @@ public abstract class Entite {
     public String toString() {
         return " a " + pv + "." ;
     }
-
-    public void subirDegat(int i) {
-        this.pv -= i;
-        this.toString() ;
-    }
 }
 
 

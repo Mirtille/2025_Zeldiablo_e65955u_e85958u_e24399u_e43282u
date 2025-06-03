@@ -33,10 +33,10 @@ public class LabyJeu implements Jeu {
 
         if (clavier.attaque) {
             this.labyrinthe.pj.attaque(this.labyrinthe);
-            System.out.println("kk");
+            System.out.println("Attaque");
         }
 
-        //this.labyrinthe.deplacerMonstres();
+        this.labyrinthe.deplacerMonstres();
 
     }
 

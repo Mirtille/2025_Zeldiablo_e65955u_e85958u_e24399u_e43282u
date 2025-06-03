@@ -36,8 +36,6 @@ public class Perso extends Entite {
                 case DROITE:
                     pose = new int[]{x + 1, y};
                     break;
-                default:
-                    break;
             }
             if (pose != null) {
                 Zombie z = labyrinthe.getZombie(pose[0], pose[1]) ;

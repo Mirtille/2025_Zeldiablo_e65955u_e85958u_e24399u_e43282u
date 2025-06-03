@@ -10,4 +10,9 @@ public abstract class Monstre extends Entite {
         this.x = suivante[0];
         this.y = suivante[1];
     }
+
+    public void subirDegat(int i) {
+        this.pv -= i;
+        System.out.println("Il reste " + pv + " points de vie au monstre.") ;
+    }
 }

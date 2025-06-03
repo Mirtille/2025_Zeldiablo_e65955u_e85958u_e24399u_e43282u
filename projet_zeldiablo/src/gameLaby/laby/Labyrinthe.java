@@ -169,13 +169,13 @@ public class Labyrinthe {
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
 
+        this.pj.ancienM = action;
 
         // si c'est pas un mur, on effectue le deplacement
         if (!this.murs[suivante[0]][suivante[1]] && (this.getZombie(suivante[0], suivante[1]) == null)) {
             // on met a jour personnage
             this.pj.x = suivante[0];
             this.pj.y = suivante[1];
-            this.pj.ancienM = action;
             for (CasesSpeciale cs : cases) {
                 if (cs.etreActiver(suivante[0], suivante[1])) {
                     cs.declencher(this.pj);
