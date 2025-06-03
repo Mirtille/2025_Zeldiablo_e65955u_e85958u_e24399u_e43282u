@@ -181,10 +181,10 @@ public class Labyrinthe {
                 cs.declencher();
             }
             if(etrePiege(suivante[0], suivante[1])) {
-                pj.vie -= 5;
+                pj.pv -= 5;
             }
             if(etreSoins(suivante[0], suivante[1])) {
-                pj.vie += 5;
+                pj.pv += 5;
             }
         }
     }

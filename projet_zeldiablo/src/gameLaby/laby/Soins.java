@@ -1,6 +1,6 @@
 package gameLaby.laby;
 
-public class Soins {
+public class Soins implements CasesSpeciale {
 
     int x,y;
 
