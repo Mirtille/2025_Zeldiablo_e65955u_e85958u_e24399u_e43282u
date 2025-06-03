@@ -125,7 +125,7 @@ public class Labyrinthe {
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute PJ
-                        this.pj = new Perso(colonne, numeroLigne);
+                        this.pj = new Perso(colonne, numeroLigne, 10, 1);
                         break;
                     case MONSTER:
                         this.monstres.add(new Slime(colonne, numeroLigne)) ;
@@ -207,8 +207,10 @@ public class Labyrinthe {
 
     public boolean etrePiege(int i , int j) {
         for(CasesSpeciale m : cases) {
-            Piege p = (Piege) m;
-            return (p.getX() == i && p.getY() == j);
+            if (m instanceof Piege) {
+                Piege p = (Piege) m;
+                return (p.getX() == i && p.getY() == j);
+            }
         }
 
         return false;
@@ -216,8 +218,10 @@ public class Labyrinthe {
 
     public boolean etreTeleporteur(int i , int j) {
         for(CasesSpeciale m : cases) {
-            Teleporteur t = (Teleporteur) m;
-            return (t.getX() == i && t.getY() == j);
+            if (m instanceof Teleporteur) {
+                Teleporteur t = (Teleporteur) m;
+                return (t.getX() == i && t.getY() == j);
+            }
         }
 
         return false;
