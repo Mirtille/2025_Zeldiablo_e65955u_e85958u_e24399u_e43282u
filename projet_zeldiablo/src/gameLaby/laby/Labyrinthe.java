@@ -188,9 +188,11 @@ public class Labyrinthe {
             if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante[0], suivante[1]) & !etreMonstre(suivante[0], suivante[1])) {
                 m.deplacerMonstre(suivante);
             }
-            for(CasesSpeciale cs : this.cases) {
-                if(cs.etreActiver(suivante[0], suivante[1])) {
-                    cs.declencher();
+            if (m.etrePresent(suivante)) {
+                for (CasesSpeciale cs : this.cases) {
+                    if (cs.etreActiver(suivante[0], suivante[1])) {
+                        cs.declencher();
+                    }
                 }
             }
         }
@@ -214,7 +216,9 @@ public class Labyrinthe {
         for(CasesSpeciale m : cases) {
             if (m instanceof Piege) {
                 Piege p = (Piege) m;
-                return (p.getX() == i && p.getY() == j);
+                if (p.t) {
+                    return (p.getX() == i && p.getY() == j);
+                }
             }
         }
 

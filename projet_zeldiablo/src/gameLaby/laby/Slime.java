@@ -13,6 +13,10 @@ public class Slime implements Monstre {
         this.y = suivante[1];
     }
 
+    public boolean etrePresent (int[] suivante) {
+        return suivante[0] == x && suivante[1] == y;
+    }
+
     public int getX() {
         return x;
     }
