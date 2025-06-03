@@ -1,12 +1,12 @@
 10
 10
 XXXXXXXXXX
-XM......MX
+X........X
+X..T..O..X
 X........X
 X........X
-X........X
-X...J....X
-X........X
+X...P....X
 X........X
 X........X
+X..T..O..X
 XXXXXXXXXX

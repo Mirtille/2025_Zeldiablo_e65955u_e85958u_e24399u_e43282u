@@ -213,27 +213,33 @@ public class Labyrinthe {
     }
 
     public boolean etrePiege(int i , int j) {
+        boolean tmp = false;
         for(CasesSpeciale m : cases) {
             if (m instanceof Piege) {
                 Piege p = (Piege) m;
                 if (p.t) {
-                    return (p.getX() == i && p.getY() == j);
+                    if (p.getX() == i && p.getY() == j) {
+                        tmp = true;
+                    }
                 }
             }
         }
 
-        return false;
+        return tmp;
     }
 
     public boolean etreTeleporteur(int i , int j) {
+        boolean tmp = false;
         for(CasesSpeciale m : cases) {
             if (m instanceof Teleporteur) {
                 Teleporteur t = (Teleporteur) m;
-                return (t.getX() == i && t.getY() == j);
+                if (t.getX() == i && t.getY() == j) {
+                    tmp = true;
+                }
             }
         }
 
-        return false;
+        return tmp ;
     }
 
 
