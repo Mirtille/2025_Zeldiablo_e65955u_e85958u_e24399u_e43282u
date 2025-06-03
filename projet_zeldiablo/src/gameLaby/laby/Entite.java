@@ -1,7 +1,5 @@
 package gameLaby.laby;
 
-import static gameLaby.laby.Labyrinthe.HAUT;
-
 public abstract class Entite {
 
     int pv ;
@@ -22,22 +20,6 @@ public abstract class Entite {
         return suivante[0] == x && suivante[1] == y;
     }
 
-    public void attaque() {
-        switch (ancienM) {
-            case HAUT:
-                if (etreZombie)
-
-        }
-        e.pv -= this.force;
-        try {
-            // Attendre 200 millisecondes
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public int getPv() {
         return pv;
     }
@@ -56,6 +38,11 @@ public abstract class Entite {
 
     public String toString() {
         return " a " + pv + "." ;
+    }
+
+    public void subirDegat(int i) {
+        this.pv -= i;
+        this.toString() ;
     }
 }
 

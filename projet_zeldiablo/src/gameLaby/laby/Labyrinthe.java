@@ -126,7 +126,7 @@ public class Labyrinthe {
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute PJ
-                        this.pj = new Perso(colonne, numeroLigne, 10, 1);
+                        this.pj = new Perso(colonne, numeroLigne, 10, 5);
                         break;
                     case MONSTER:
                         this.monstres.add(new Zombie(colonne, numeroLigne)) ;
@@ -171,10 +171,11 @@ public class Labyrinthe {
 
 
         // si c'est pas un mur, on effectue le deplacement
-        if (!this.murs[suivante[0]][suivante[1]]) {
+        if (!this.murs[suivante[0]][suivante[1]] && (this.getZombie(suivante[0], suivante[1]) == null)) {
             // on met a jour personnage
             this.pj.x = suivante[0];
             this.pj.y = suivante[1];
+            this.pj.ancienM = action;
             for (CasesSpeciale cs : cases) {
                 if (cs.etreActiver(suivante[0], suivante[1])) {
                     cs.declencher(this.pj);
@@ -190,7 +191,7 @@ public class Labyrinthe {
             String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
             int a = (int) (Math.random() * (4));
             int[] suivante = getSuivant(courante[0], courante[1], action[a]);
-            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !etreZombie(suivante[0], suivante[1])) {
+            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !(getZombie(suivante[0], suivante[1])!= null)) {
                 m.deplacerMonstre(suivante);
             }
             if (m.etrePresent(suivante)) {
@@ -209,17 +210,16 @@ public class Labyrinthe {
 
     }
 
-    public boolean etreZombie(int i , int j) {
-        boolean tmp = false;
+    public Zombie getZombie(int i , int j) {
         for(Monstre m : monstres) {
             if (m instanceof Zombie) {
                 Zombie z = (Zombie) m;
                 if(z.getX() == i && z.getY() == j) {
-                    tmp = true;
+                    return z ;
                 }
             }
         }
-        return tmp ;
+        return null;
     }
 
     public boolean etrePiege(int i , int j) {

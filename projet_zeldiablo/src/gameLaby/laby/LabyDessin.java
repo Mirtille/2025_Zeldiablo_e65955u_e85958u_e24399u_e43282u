@@ -50,7 +50,7 @@ public class LabyDessin implements DessinJeu {
                     gc.drawImage(imgPerso, x, y, caseWidth, caseHeight);
                 }
 
-                if (laby.getLabyrinthe().etreZombie(i, j)) {
+                if (laby.getLabyrinthe().getZombie(i, j) != null) {
                     gc.drawImage(imgMonstre, x, y, caseWidth, caseHeight);
                 }
 
