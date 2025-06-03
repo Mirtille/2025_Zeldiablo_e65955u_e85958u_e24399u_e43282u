@@ -32,6 +32,7 @@ public class LabyDessin implements DessinJeu {
             for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
                 double x = i * caseWidth;
                 double y = j * caseHeight;
+                int[] pj = {i, j} ;
 
                 if (laby.getLabyrinthe().getMur(i, j)) {
                     gc.drawImage(imgPierre, x, y, caseWidth, caseHeight);
@@ -41,7 +42,7 @@ public class LabyDessin implements DessinJeu {
                     gc.drawImage(imgPiege, x, y, caseWidth, caseHeight);
                 }
 
-                if (laby.getLabyrinthe().pj.etrePresent(i, j)) {
+                if (laby.getLabyrinthe().pj.etrePresent(pj)) {
                     gc.drawImage(imgPerso, x, y, caseWidth, caseHeight);
                 }
 

@@ -41,7 +41,7 @@ public class Labyrinthe {
      */
     public boolean[][] murs;
 
-    public List<Slime> monstres ;
+    public List<Zombie> monstres ;
 
     public List<CasesSpeciale> cases;
 
@@ -99,7 +99,7 @@ public class Labyrinthe {
         // creation labyrinthe vide
         this.murs = new boolean[nbColonnes][nbLignes];
         this.pj = null;
-        this.monstres = new ArrayList<Slime>();
+        this.monstres = new ArrayList<Zombie>();
         this.cases = new ArrayList<CasesSpeciale>();
 
         // lecture des cases
@@ -128,7 +128,7 @@ public class Labyrinthe {
                         this.pj = new Perso(colonne, numeroLigne, 10, 1);
                         break;
                     case MONSTER:
-                        this.monstres.add(new Slime(colonne, numeroLigne)) ;
+                        this.monstres.add(new Zombie(colonne, numeroLigne)) ;
                         break;
                     case PIEGE:
                         this.cases.add(new Piege(colonne, numeroLigne)) ;
@@ -180,12 +180,12 @@ public class Labyrinthe {
     }
 
     public void deplacerMonstres() {
-        for (Slime m : monstres) {
+        for (Zombie m : monstres) {
             int[] courante = {m.getX(), m.getY()};
             String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
             int a = (int) (Math.random() * (4));
             int[] suivante = getSuivant(courante[0], courante[1], action[a]);
-            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante[0], suivante[1]) & !etreMonstre(suivante[0], suivante[1])) {
+            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !etreMonstre(suivante[0], suivante[1])) {
                 m.deplacerMonstre(suivante);
             }
             if (m.etrePresent(suivante)) {
@@ -204,7 +204,7 @@ public class Labyrinthe {
 
     public boolean etreMonstre(int i , int j) {
         boolean tmp = false;
-        for(Slime m : monstres) {
+        for(Zombie m : monstres) {
             if(m.getX() == i && m.getY() == j) {
                 tmp = true;
             }
