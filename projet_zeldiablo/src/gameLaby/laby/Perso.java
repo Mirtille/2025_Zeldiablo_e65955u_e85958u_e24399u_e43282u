@@ -15,4 +15,8 @@ public class Perso extends Entite {
     public Perso(int dx, int dy, int pv, int atq) {
         super(dx, dy, pv, atq);
     }
+
+    public String toString() {
+        return "Steve" + super.toString() ;
+    }
 }

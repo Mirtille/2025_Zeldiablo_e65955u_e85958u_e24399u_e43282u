@@ -42,7 +42,7 @@ public class Labyrinthe {
      */
     public boolean[][] murs;
 
-    public List<Zombie> monstres ;
+    public List<Monstre> monstres ;
 
     public List<CasesSpeciale> cases;
 
@@ -100,7 +100,7 @@ public class Labyrinthe {
         // creation labyrinthe vide
         this.murs = new boolean[nbColonnes][nbLignes];
         this.pj = null;
-        this.monstres = new ArrayList<Zombie>();
+        this.monstres = new ArrayList<Monstre>();
         this.cases = new ArrayList<CasesSpeciale>();
 
         // lecture des cases
@@ -185,12 +185,12 @@ public class Labyrinthe {
     }
 
     public void deplacerMonstres() {
-        for (Zombie m : monstres) {
+        for (Monstre m : monstres) {
             int[] courante = {m.getX(), m.getY()};
             String[] action = {DROITE, GAUCHE, BAS, HAUT} ;
             int a = (int) (Math.random() * (4));
             int[] suivante = getSuivant(courante[0], courante[1], action[a]);
-            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !etreMonstre(suivante[0], suivante[1])) {
+            if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !etreZombie(suivante[0], suivante[1])) {
                 m.deplacerMonstre(suivante);
             }
             if (m.etrePresent(suivante)) {
@@ -204,15 +204,19 @@ public class Labyrinthe {
         }
     }
 
-    public void genererMonstres() {
+    public void genererMonstres(int nombresMonstres) {
+
 
     }
 
-    public boolean etreMonstre(int i , int j) {
+    public boolean etreZombie(int i , int j) {
         boolean tmp = false;
-        for(Zombie m : monstres) {
-            if(m.getX() == i && m.getY() == j) {
-                tmp = true;
+        for(Monstre m : monstres) {
+            if (m instanceof Zombie) {
+                Zombie z = (Zombie) m;
+                if(z.getX() == i && z.getY() == j) {
+                    tmp = true;
+                }
             }
         }
         return tmp ;
@@ -230,7 +234,6 @@ public class Labyrinthe {
                 }
             }
         }
-
         return tmp;
     }
 

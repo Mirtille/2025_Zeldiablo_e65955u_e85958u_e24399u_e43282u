@@ -35,7 +35,7 @@ public abstract class Entite {
     }
 
     public String toString() {
-        return "Michel a " + pv + "." ;
+        return " a " + pv + "." ;
     }
 }
 
