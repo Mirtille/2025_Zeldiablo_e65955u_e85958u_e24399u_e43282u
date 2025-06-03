@@ -3,6 +3,7 @@ package gameLaby.laby;
 public class Piege implements CasesSpeciale {
 
     int x,y;
+    boolean t = false;
 
     public Piege(int x, int y) {
         this.x = x;
@@ -10,9 +11,10 @@ public class Piege implements CasesSpeciale {
     }
 
     public void declencher() {
-        System.out.println("piege declencher");
+        System.out.println("Piege declencher");
     }
     public boolean etreActiver(int i, int j) {
+        t = true;
         return x == i && y == j;
     }
 
@@ -23,4 +25,6 @@ public class Piege implements CasesSpeciale {
     public int getY() {
         return y;
     }
+
+
 }

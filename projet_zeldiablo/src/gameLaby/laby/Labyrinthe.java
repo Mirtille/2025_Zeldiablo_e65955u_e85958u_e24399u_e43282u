@@ -188,6 +188,11 @@ public class Labyrinthe {
             if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante[0], suivante[1]) & !etreMonstre(suivante[0], suivante[1])) {
                 m.deplacerMonstre(suivante);
             }
+            for(CasesSpeciale cs : this.cases) {
+                if(cs.etreActiver(suivante[0], suivante[1])) {
+                    cs.declencher();
+                }
+            }
         }
     }
 
