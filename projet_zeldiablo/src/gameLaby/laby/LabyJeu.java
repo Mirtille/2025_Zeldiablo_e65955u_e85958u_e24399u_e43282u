@@ -18,7 +18,6 @@ public class LabyJeu implements Jeu {
 
     private Labyrinthe labyrinthe;
     private final List<Labyrinthe> labyrinthes;
-    private double tempsDepuisDernierDeplacement;
     private Perso perso;
 
     /**
