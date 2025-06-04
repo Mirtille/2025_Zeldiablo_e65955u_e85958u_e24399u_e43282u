@@ -270,7 +270,7 @@ public class Labyrinthe {
      * @return fin du jeu
      */
     public boolean etreFini() {
-        return false;
+        return this.pj.etreMort();
     }
 
     // ##################################

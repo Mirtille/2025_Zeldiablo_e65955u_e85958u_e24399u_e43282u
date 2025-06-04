@@ -35,6 +35,7 @@ public class LabyDessin implements DessinJeu {
         Image imgPierreDessus = new Image("file:img/PierreMoitier.png");
         Image imgHerbe = new Image("file:img/herbe.jpg");
         Image imgHeal = new Image("file:img/heal.png");
+        Image imgCoup = new Image("file:img/coup.png");
         //murs
         double caseWidth = (double) laby.WIDTH / laby.getLabyrinthe().getLength();
         double caseHeight = (double) laby.HEIGHT / laby.getLabyrinthe().getLengthY();
@@ -43,14 +44,10 @@ public class LabyDessin implements DessinJeu {
             for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
                 double x = i * caseWidth;
                 double y = j * caseHeight;
-                int[] p = {i, j} ;
 
-                if (laby.getLabyrinthe().getMur(i, j)) {
-                    gc.drawImage(imgPierre, x, y, caseWidth, caseHeight);
-                    gc.drawImage(imgPierreDessus, x, y-caseHeight/3, caseWidth, caseHeight/2);
-                } else {
-                    gc.drawImage(imgHerbe, x, y, caseWidth, caseHeight);
-                }
+
+                gc.drawImage(imgHerbe, x, y, caseWidth, caseHeight);
+
                 if (laby.getLabyrinthe().contientCase(Soins.class, i, j)) {
                     gc.drawImage(imgHeal, x, y, caseWidth, caseHeight);
                 }
@@ -59,23 +56,47 @@ public class LabyDessin implements DessinJeu {
                     gc.drawImage(imgPiege, x, y, caseWidth, caseHeight);
                 }
 
+                if (laby.getLabyrinthe().contientCase(Teleporteur.class, i, j)) {
+                    gc.drawImage(imgTeleporteur, x, y, caseWidth, caseHeight);
+                }
+            }
+        }
+        for (int i = 0; i < laby.getLabyrinthe().getLength(); i++) {
+            for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
+                double x = i * caseWidth;
+                double y = j * caseHeight;
+                int[] p = {i, j} ;
+
                 if (laby.getLabyrinthe().pj.etrePresent(p)) {
                     switch(laby.getLabyrinthe().pj.ancienM) {
                         case HAUT:
                             gc.drawImage(imgPersoH, x, y, caseWidth, caseHeight);
+                            if (laby.getLabyrinthe().pj.avoirAttaque) {
+                                gc.drawImage(imgCoup, x, y-caseHeight, caseWidth, caseHeight) ;
+                            }
                             break;
                         case BAS:
                             gc.drawImage(imgPersoB, x, y, caseWidth, caseHeight);
+                            if (laby.getLabyrinthe().pj.avoirAttaque) {
+                                gc.drawImage(imgCoup, x, y+caseHeight, caseWidth, caseHeight) ;
+                            }
                             break;
                         case GAUCHE:
                             gc.drawImage(imgPersoG, x, y, caseWidth, caseHeight);
+                            if (laby.getLabyrinthe().pj.avoirAttaque) {
+                                gc.drawImage(imgCoup, x-caseWidth, y, caseWidth, caseHeight) ;
+                            }
                             break;
                         case DROITE:
                             gc.drawImage(imgPersoD, x, y, caseWidth, caseHeight);
+                            if (laby.getLabyrinthe().pj.avoirAttaque) {
+                                gc.drawImage(imgCoup, x+caseWidth, y, caseWidth, caseHeight) ;
+                            }
                             break;
                         default:
                             gc.drawImage(imgPersoB, x, y, caseWidth, caseHeight);
                     }
+                    laby.getLabyrinthe().pj.avoirAttaque = false;
                 }
 
                 if (laby.getLabyrinthe().getZombie(i, j) != null) {
@@ -97,10 +118,16 @@ public class LabyDessin implements DessinJeu {
                     }
                 }
 
-                if (laby.getLabyrinthe().contientCase(Teleporteur.class, i, j)) {
-                    gc.drawImage(imgTeleporteur, x, y, caseWidth, caseHeight);
+            }
+        }
+        for (int i = 0; i < laby.getLabyrinthe().getLength(); i++) {
+            for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
+                double x = i * caseWidth;
+                double y = j * caseHeight;
+                if (laby.getLabyrinthe().getMur(i, j)) {
+                    gc.drawImage(imgPierre, x, y, caseWidth, caseHeight);
+                    gc.drawImage(imgPierreDessus, x, y - caseHeight / 3, caseWidth, caseHeight / 2);
                 }
-
             }
         }
     }

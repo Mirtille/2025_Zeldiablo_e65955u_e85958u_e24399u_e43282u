@@ -10,6 +10,7 @@ import static gameLaby.laby.Labyrinthe.*;
  */
 public class Perso extends Entite {
 
+    boolean avoirAttaque ;
     /**
      * constructeur
      *
@@ -18,9 +19,11 @@ public class Perso extends Entite {
      */
     public Perso(int dx, int dy, int pv, int atq) {
         super(dx, dy, pv, atq);
+        this.avoirAttaque = false ;
     }
 
     public void attaque(Labyrinthe labyrinthe) {
+        avoirAttaque = true ;
             int[] pose = null ;
             switch (ancienM) {
                 case HAUT:

@@ -4,6 +4,8 @@ import moteurJeu.Clavier;
 import moteurJeu.Jeu;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LabyJeu implements Jeu {
 
@@ -11,6 +13,8 @@ public class LabyJeu implements Jeu {
     public static final int HEIGHT = 600;
 
     private final Labyrinthe labyrinthe;
+    private double tempsDepuisDernierDeplacement ;
+
 
     public LabyJeu(String nom) throws IOException {
         this.labyrinthe = new Labyrinthe(nom) ;
@@ -37,6 +41,13 @@ public class LabyJeu implements Jeu {
         }
 
         this.labyrinthe.deplacerMonstres();
+        List<Monstre> morts = new ArrayList<>();
+        for (Monstre m : this.labyrinthe.monstres) {
+            if (m.etreMort()) {
+                morts.add(m);
+            }
+        }
+        this.labyrinthe.monstres.removeAll(morts);
 
     }
 
@@ -47,7 +58,7 @@ public class LabyJeu implements Jeu {
 
     @Override
     public boolean etreFini() {
-        return false;
+        return this.labyrinthe.etreFini() ;
     }
 
     public Labyrinthe getLabyrinthe() {

@@ -45,8 +45,9 @@ public abstract class Entite {
     public boolean etreMort(){
         if (this.pv <= 0){
             return true;
+        } else {
+            return false ;
         }
-        return false;
     }
 }
 

@@ -49,6 +49,9 @@ public class MoteurJeu extends Application {
      */
     Clavier controle = new Clavier();
 
+    private static Stage primaryStageRef;
+
+
     /**
      * lancement d'un jeu
      *
@@ -109,6 +112,8 @@ public class MoteurJeu extends Application {
         final Scene scene = new Scene(root, WIDTH, HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStageRef = primaryStage;
+
 
 
         // listener clavier
@@ -140,6 +145,7 @@ public class MoteurJeu extends Application {
 
         // lance la boucle de jeu
         startAnimation(canvas);
+
     }
 
     /**
@@ -170,7 +176,12 @@ public class MoteurJeu extends Application {
                 if (dureeEnMilliSecondes > dureeFPS) {
                     // met a jour le jeu en passant les touches appuyees
                     jeu.update(dureeEnMilliSecondes / 1_000., controle);
-
+                    if (jeu.etreFini()) {
+                        System.out.println("Fin du jeu : le personnage est mort.");
+                        stop();
+                        primaryStageRef.close();
+                        return;
+                    }
                     // dessine le jeu
                     dessin.dessinerJeu(jeu, canvas);
 

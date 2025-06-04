@@ -1,6 +1,5 @@
 package gameLaby.laby;
 
-
 import moteurJeu.MoteurJeu;
 
 import java.io.IOException;
@@ -11,9 +10,9 @@ public class MainLaby {
 
     int width = 800;
     int height = 600;
-    int pFPS = 5;
+    int pFPS = 60;
 
-    LabyJeu jeu = new LabyJeu("labySimple/labydefault.txt");
+    LabyJeu jeu = new LabyJeu("labySimple/laby2.txt");
     LabyDessin dessin = new LabyDessin();
     jeu.getLabyrinthe().genererMonstres(2);
 
@@ -21,11 +20,8 @@ public class MainLaby {
         MoteurJeu.setFPS(pFPS);
 
     // lancement du jeu
-
-        while(!jeu.getLabyrinthe().pj.etreMort()){
-
-        }
         MoteurJeu.launch(jeu,dessin);
+
 
 
     }
