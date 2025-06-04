@@ -56,7 +56,7 @@ public class LabyDessin implements DessinJeu {
                     gc.drawImage(imgPiege, x, y, caseWidth, caseHeight);
                 }
 
-                if (laby.getLabyrinthe().contientCase(Teleporteur.class, i, j)) {
+                if (laby.getLabyrinthe().contientCase(Teleporteur.class, i, j) && laby.getLabyrinthe().etreClear()) {
                     gc.drawImage(imgTeleporteur, x, y, caseWidth, caseHeight);
                 }
             }
@@ -102,10 +102,7 @@ public class LabyDessin implements DessinJeu {
                 if (laby.getLabyrinthe().getZombie(i, j) != null) {
                     switch(laby.getLabyrinthe().getZombie(i,j).ancienM) {
                         case HAUT:
-                            gc.save();
-                            gc.rotate(90);
                             gc.drawImage(imgZombieH, x, y, caseWidth, caseHeight);
-                            gc.restore();
                             break;
                         case BAS:
                             gc.drawImage(imgZombieB, x, y, caseWidth, caseHeight);

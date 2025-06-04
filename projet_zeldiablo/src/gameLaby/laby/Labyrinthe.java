@@ -86,7 +86,7 @@ public class Labyrinthe {
      * @return labyrinthe cree
      * @throws IOException probleme a la lecture / ouverture
      */
-    public Labyrinthe(String nom) throws IOException {
+    public Labyrinthe(String nom, LabyJeu j) throws IOException {
         // ouvrir fichier
         FileReader fichier = new FileReader(nom);
         BufferedReader bfRead = new BufferedReader(fichier);
@@ -126,7 +126,7 @@ public class Labyrinthe {
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute PJ
-                        this.pj = new Perso(colonne, numeroLigne, 10, 5);
+                        this.pj = new Perso(colonne, numeroLigne, 10, 1);
                         break;
                     case MONSTER:
                         this.monstres.add(new Zombie(colonne, numeroLigne)) ;
@@ -135,7 +135,7 @@ public class Labyrinthe {
                         this.cases.add(new Piege(colonne, numeroLigne)) ;
                         break;
                     case TELEPORTEUR:
-                        this.cases.add(new Teleporteur(colonne, numeroLigne)) ;
+                        this.cases.add(new Teleporteur(colonne, numeroLigne, j)) ;
                         break;
                     case SOINS:
                         this.cases.add(new Soins(colonne, numeroLigne));
@@ -198,9 +198,11 @@ public class Labyrinthe {
                 }
                 if (m.etrePresent(suivante)) {
                     for (CasesSpeciale cs : this.cases) {
-                        if (cs.etreActiver(suivante[0], suivante[1])) {
-                            cs.declencher(m);
-                            System.out.println(m.toString());
+                        if (cs instanceof Piege) {
+                            if (cs.etreActiver(suivante[0], suivante[1])) {
+                                cs.declencher(m);
+                                System.out.println(m.toString());
+                            }
                         }
                     }
                 }
@@ -260,6 +262,18 @@ public class Labyrinthe {
             }
         }
         return false;
+    }
+
+    public void chargerPerso(Perso perso) {
+        int tmpX = this.pj.x;
+        int tmpY = this.pj.y;
+        this.pj = perso;
+        this.pj.x = tmpX;
+        this.pj.y = tmpY;
+    }
+
+    public boolean etreClear() {
+        return this.monstres.isEmpty();
     }
 
 

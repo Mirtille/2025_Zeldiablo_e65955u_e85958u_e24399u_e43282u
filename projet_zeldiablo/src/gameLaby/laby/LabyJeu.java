@@ -12,12 +12,22 @@ public class LabyJeu implements Jeu {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
-    private final Labyrinthe labyrinthe;
+    private Labyrinthe labyrinthe;
+    private final List<Labyrinthe> labyrinthes;
     private double tempsDepuisDernierDeplacement ;
+    private Perso perso;
+
 
 
     public LabyJeu(String nom) throws IOException {
-        this.labyrinthe = new Labyrinthe(nom) ;
+        this.labyrinthes = new ArrayList<>();
+        int[] nbM = {0, 2, 10, 30} ;
+        for (int i = 0; i < 4; i++) {
+            labyrinthes.add(new Labyrinthe(nom + i + ".txt", this));
+            this.labyrinthes.get(i).genererMonstres(nbM[i]);
+        }
+        this.labyrinthe = labyrinthes.get(0);
+        this.perso = labyrinthe.pj ;
     }
 
     @Override
@@ -49,6 +59,11 @@ public class LabyJeu implements Jeu {
         }
         this.labyrinthe.monstres.removeAll(morts);
 
+    }
+
+    public void changerEtage(int e) {
+        this.labyrinthe = this.labyrinthes.get(this.labyrinthes.indexOf(this.labyrinthe)+ e) ;
+        this.labyrinthe.chargerPerso((perso));
     }
 
     @Override

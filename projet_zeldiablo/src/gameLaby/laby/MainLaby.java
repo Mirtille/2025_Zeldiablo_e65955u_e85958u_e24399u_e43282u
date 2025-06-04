@@ -10,11 +10,10 @@ public class MainLaby {
 
     int width = 800;
     int height = 600;
-    int pFPS = 60;
+    int pFPS = 30;
 
-    LabyJeu jeu = new LabyJeu("labySimple/laby2.txt");
+    LabyJeu jeu = new LabyJeu("labySimple/laby");
     LabyDessin dessin = new LabyDessin();
-    jeu.getLabyrinthe().genererMonstres(2);
 
         MoteurJeu.setTaille(width,height);
         MoteurJeu.setFPS(pFPS);
