@@ -102,7 +102,10 @@ public class LabyDessin implements DessinJeu {
                 if (laby.getLabyrinthe().getZombie(i, j) != null) {
                     switch(laby.getLabyrinthe().getZombie(i,j).ancienM) {
                         case HAUT:
+                            gc.save();
+                            gc.rotate(90);
                             gc.drawImage(imgZombieH, x, y, caseWidth, caseHeight);
+                            gc.restore();
                             break;
                         case BAS:
                             gc.drawImage(imgZombieB, x, y, caseWidth, caseHeight);
