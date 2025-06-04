@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * classe labyrinthe. represente un labyrinthe avec
- * <ul> des murs </ul>
- * <ul> un personnage (x,y) </ul>
+ * Classe Labyrinthe. Représente un labyrinthe avec :
+ * - des murs
+ * - un personnage
+ * - des monstres
+ * - des cases spéciales
  */
 public class Labyrinthe {
 
-    /**
-     * Constantes char
-     */
+    // Constantes de types de cases
     public static final char MUR = 'X';
     public static final char PJ = 'P';
     public static final char VIDE = '.';
@@ -24,185 +24,128 @@ public class Labyrinthe {
     public static final char TELEPORTEUR = 'T';
     public static final char SOINS = 'S';
 
-    /**
-     * constantes actions possibles
-     */
+    // Constantes d'action
     public static final String HAUT = "Haut";
     public static final String BAS = "Bas";
     public static final String GAUCHE = "Gauche";
     public static final String DROITE = "Droite";
 
-    /**
-     * attribut du personnage
-     */
     public Perso pj;
-
-    /**
-     * les murs du labyrinthe
-     */
     public boolean[][] murs;
-
-    public List<Monstre> monstres ;
-
+    public List<Monstre> monstres;
     public List<CasesSpeciale> cases;
 
     /**
-     * retourne la case suivante selon une actions
+     * Retourne la case suivante selon l'action effectuée.
      *
-     * @param x      case depart
-     * @param y      case depart
-     * @param action action effectuee
-     * @return case suivante
+     * @param x position x actuelle
+     * @param y position y actuelle
+     * @param action direction à prendre
+     * @return tableau avec les nouvelles coordonnées
      */
     static int[] getSuivant(int x, int y, String action) {
         switch (action) {
-            case HAUT:
-                // on monte une ligne
-                y--;
-                break;
-            case BAS:
-                // on descend une ligne
-                y++;
-                break;
-            case DROITE:
-                // on augmente colonne
-                x++;
-                break;
-            case GAUCHE:
-                // on augmente colonne
-                x--;
-                break;
-            default:
-                throw new Error("action inconnue");
+            case HAUT -> y--;
+            case BAS -> y++;
+            case DROITE -> x++;
+            case GAUCHE -> x--;
+            default -> throw new Error("action inconnue");
         }
-        int[] res = {x, y};
-        return res;
+        return new int[]{x, y};
     }
 
     /**
-     * charge le labyrinthe
+     * Construit un labyrinthe depuis un fichier texte.
      *
-     * @param nom nom du fichier de labyrinthe
-     * @return labyrinthe cree
-     * @throws IOException probleme a la lecture / ouverture
+     * @param nom nom du fichier
+     * @param j instance du jeu (pour le téléporteur)
+     * @throws IOException si le fichier est introuvable
      */
     public Labyrinthe(String nom, LabyJeu j) throws IOException {
-        // ouvrir fichier
         FileReader fichier = new FileReader(nom);
         BufferedReader bfRead = new BufferedReader(fichier);
 
-        int nbLignes, nbColonnes;
-        // lecture nblignes
-        nbLignes = Integer.parseInt(bfRead.readLine());
-        // lecture nbcolonnes
-        nbColonnes = Integer.parseInt(bfRead.readLine());
+        int nbLignes = Integer.parseInt(bfRead.readLine());
+        int nbColonnes = Integer.parseInt(bfRead.readLine());
 
-        // creation labyrinthe vide
         this.murs = new boolean[nbColonnes][nbLignes];
         this.pj = null;
-        this.monstres = new ArrayList<Monstre>();
-        this.cases = new ArrayList<CasesSpeciale>();
+        this.monstres = new ArrayList<>();
+        this.cases = new ArrayList<>();
 
-        // lecture des cases
         String ligne = bfRead.readLine();
-
-        // stocke les indices courants
         int numeroLigne = 0;
 
-        // parcours le fichier
         while (ligne != null) {
-
-            // parcours de la ligne
             for (int colonne = 0; colonne < ligne.length(); colonne++) {
                 char c = ligne.charAt(colonne);
                 switch (c) {
-                    case MUR:
-                        this.murs[colonne][numeroLigne] = true;
-                        break;
-                    case VIDE:
+                    case MUR -> this.murs[colonne][numeroLigne] = true;
+                    case VIDE -> this.murs[colonne][numeroLigne] = false;
+                    case PJ -> {
                         this.murs[colonne][numeroLigne] = false;
-                        break;
-                    case PJ:
-                        // pas de mur
-                        this.murs[colonne][numeroLigne] = false;
-                        // ajoute PJ
                         this.pj = new Perso(colonne, numeroLigne, 10, 1);
-                        break;
-                    case MONSTER:
-                        this.monstres.add(new Zombie(colonne, numeroLigne)) ;
-                        break;
-                    case PIEGE:
-                        this.cases.add(new Piege(colonne, numeroLigne)) ;
-                        break;
-                    case TELEPORTEUR:
-                        this.cases.add(new Teleporteur(colonne, numeroLigne, j)) ;
-                        break;
-                    case SOINS:
-                        this.cases.add(new Soins(colonne, numeroLigne));
-                        break;
-
-                        default:
-                        throw new Error("caractere inconnu " + c);
+                    }
+                    case MONSTER -> this.monstres.add(new Zombie(colonne, numeroLigne));
+                    case PIEGE -> this.cases.add(new Piege(colonne, numeroLigne));
+                    case TELEPORTEUR -> this.cases.add(new Teleporteur(colonne, numeroLigne, j));
+                    case SOINS -> this.cases.add(new Soins(colonne, numeroLigne));
+                    default -> throw new Error("caractere inconnu " + c);
                 }
             }
-
-            // lecture
             ligne = bfRead.readLine();
             numeroLigne++;
         }
 
-        // ferme fichier
         bfRead.close();
     }
 
-
     /**
-     * deplace le personnage en fonction de l'action.
-     * gere la collision avec les murs
+     * Déplace le joueur si possible (pas de mur ni zombie).
      *
-     * @param action une des actions possibles
+     * @param action direction à prendre
      */
     public void deplacerPerso(String action) {
-        // case courante
         int[] courante = {this.pj.x, this.pj.y};
-
-        // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
-
         this.pj.ancienM = action;
 
-        // si c'est pas un mur, on effectue le deplacement
-        if (!this.murs[suivante[0]][suivante[1]] && (this.getZombie(suivante[0], suivante[1]) == null)) {
-            // on met a jour personnage
+        if (!this.murs[suivante[0]][suivante[1]] && getZombie(suivante[0], suivante[1]) == null) {
             this.pj.x = suivante[0];
             this.pj.y = suivante[1];
+
             for (CasesSpeciale cs : cases) {
                 if (cs.etreActiver(suivante[0], suivante[1])) {
                     cs.declencher(this.pj);
-                    System.out.println(this.pj.toString());
+                    System.out.println(this.pj);
                 }
             }
         }
     }
 
+    /**
+     * Déplace les monstres aléatoirement si le tirage le permet.
+     */
     public void deplacerMonstres() {
-        if (1 == (int) (Math.random() * (3))) {
+        if (1 == (int) (Math.random() * 3)) {
             for (Monstre m : monstres) {
                 int[] courante = {m.getX(), m.getY()};
                 String[] action = {DROITE, GAUCHE, BAS, HAUT};
-                int a = (int) (Math.random() * (4));
+                int a = (int) (Math.random() * 4);
                 int[] suivante = getSuivant(courante[0], courante[1], action[a]);
                 m.ancienM = action[a];
-                if (!this.murs[suivante[0]][suivante[1]] & !this.pj.etrePresent(suivante) & !(getZombie(suivante[0], suivante[1]) != null)) {
+
+                if (!this.murs[suivante[0]][suivante[1]] &&
+                        !this.pj.etrePresent(suivante) &&
+                        getZombie(suivante[0], suivante[1]) == null) {
                     m.deplacerMonstre(suivante);
                 }
+
                 if (m.etrePresent(suivante)) {
                     for (CasesSpeciale cs : this.cases) {
-                        if (cs instanceof Piege) {
-                            if (cs.etreActiver(suivante[0], suivante[1])) {
-                                cs.declencher(m);
-                                System.out.println(m.toString());
-                            }
+                        if (cs instanceof Piege && cs.etreActiver(suivante[0], suivante[1])) {
+                            cs.declencher(m);
+                            System.out.println(m);
                         }
                     }
                 }
@@ -210,6 +153,11 @@ public class Labyrinthe {
         }
     }
 
+    /**
+     * Génère un certain nombre de zombies aléatoirement dans le labyrinthe.
+     *
+     * @param nombresMonstres nombre à générer
+     */
     public void genererMonstres(int nombresMonstres) {
         int compteur = 0;
         while (compteur < nombresMonstres) {
@@ -222,48 +170,62 @@ public class Labyrinthe {
         }
     }
 
+    /**
+     * Vérifie si une case est libre (pas de mur, joueur, zombie ou case spéciale).
+     *
+     * @param x coordonnée x
+     * @param y coordonnée y
+     * @return true si vide
+     */
     public boolean etreVide(int x, int y) {
-        boolean etreVide = true ;
         int[] pose = {x, y};
-        if (this.getMur(x, y)) {
-            etreVide = false;
-        }
-        if (pj.etrePresent((pose))) {
-            etreVide = false;
-        }
-        if (getZombie(pose[0], pose[1]) != null) {
-            etreVide = false;
-        }
-        if (contientCase(Piege.class, x, y) || contientCase(Piege.class, x, y) || contientCase(Piege.class, x, y )) {
-            etreVide = false;
-        }
-        return etreVide;
+        return !getMur(x, y)
+                && !pj.etrePresent(pose)
+                && getZombie(x, y) == null
+                && !contientCase(Piege.class, x, y);
     }
 
-    public Zombie getZombie(int i , int j) {
-        for(Monstre m : monstres) {
-            if (m instanceof Zombie) {
-                Zombie z = (Zombie) m;
-                if(z.getX() == i && z.getY() == j) {
-                    return z ;
-                }
+    /**
+     * Récupère un zombie présent en (i, j).
+     *
+     * @param i position x
+     * @param j position y
+     * @return zombie si présent, sinon null
+     */
+    public Zombie getZombie(int i, int j) {
+        for (Monstre m : monstres) {
+            if (m instanceof Zombie z && z.getX() == i && z.getY() == j) {
+                return z;
             }
         }
         return null;
     }
 
+    /**
+     * Vérifie si une case spéciale d'un certain type est en (i, j).
+     *
+     * @param type type de case (ex: Piege.class)
+     * @param i x
+     * @param j y
+     * @return true si présente
+     */
     public boolean contientCase(Class<?> type, int i, int j) {
         for (CasesSpeciale m : cases) {
             if (type.isInstance(m) && m.getX() == i && m.getY() == j) {
                 if (m instanceof Piege p) {
-                    return p.t; // pour les pièges, il faut qu’ils soient activés
+                    return p.t; // actif
                 }
-                return true; // pour les autres types, pas de condition spéciale
+                return true;
             }
         }
         return false;
     }
 
+    /**
+     * Remplace le joueur actuel par un nouveau tout en gardant sa position.
+     *
+     * @param perso nouveau personnage
+     */
     public void chargerPerso(Perso perso) {
         int tmpX = this.pj.x;
         int tmpY = this.pj.y;
@@ -272,51 +234,50 @@ public class Labyrinthe {
         this.pj.y = tmpY;
     }
 
+    /**
+     * Indique si le niveau est terminé (plus de monstres).
+     *
+     * @return true si vide
+     */
     public boolean etreClear() {
         return this.monstres.isEmpty();
     }
 
-
-
     /**
-     * jamais fini
+     * Indique si le jeu est fini (joueur mort).
      *
-     * @return fin du jeu
+     * @return true si mort
      */
     public boolean etreFini() {
         return this.pj.etreMort();
     }
 
     // ##################################
-    // GETTER
+    // GETTERS
     // ##################################
 
     /**
-     * return taille selon Y
-     *
-     * @return
+     * @return nombre de lignes (Y)
      */
     public int getLengthY() {
         return murs[0].length;
     }
 
     /**
-     * return taille selon X
-     *
-     * @return
+     * @return nombre de colonnes (X)
      */
     public int getLength() {
         return murs.length;
     }
 
     /**
-     * return mur en (i,j)
-     * @param x
-     * @param y
-     * @return
+     * Renvoie si une case est un mur.
+     *
+     * @param x abscisse
+     * @param y ordonnée
+     * @return true si mur
      */
     public boolean getMur(int x, int y) {
-        // utilise le tableau de boolean
         return this.murs[x][y];
     }
 }

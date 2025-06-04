@@ -10,9 +10,17 @@ import javafx.scene.image.Image;
 
 import static gameLaby.laby.Labyrinthe.*;
 
+/**
+ * Classe qui gère l'affichage graphique du jeu Labyrinthe.
+ */
 public class LabyDessin implements DessinJeu {
 
-
+    /**
+     * Dessine le jeu sur le canvas à partir de l'état du labyrinthe.
+     *
+     * @param jeu le jeu à dessiner (doit être un LabyJeu)
+     * @param canvas la surface de dessin
+     */
     @Override
     public void dessinerJeu(Jeu jeu, Canvas canvas) {
         LabyJeu laby = (LabyJeu) jeu;
@@ -21,6 +29,7 @@ public class LabyDessin implements DessinJeu {
         gc.setFill(Color.LIGHTGRAY);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+        // Chargement des images
         Image imgPiege = new Image("file:img/poison (2).png");
         Image imgPersoH = new Image("file:img/haut.png");
         Image imgPersoB = new Image("file:img/bas.png");
@@ -36,15 +45,16 @@ public class LabyDessin implements DessinJeu {
         Image imgHerbe = new Image("file:img/herbe.jpg");
         Image imgHeal = new Image("file:img/heal.png");
         Image imgCoup = new Image("file:img/coup.png");
-        //murs
+
+        // Dimensions des cases
         double caseWidth = (double) laby.WIDTH / laby.getLabyrinthe().getLength();
         double caseHeight = (double) laby.HEIGHT / laby.getLabyrinthe().getLengthY();
 
+        // Affichage du sol et des cases spéciales
         for (int i = 0; i < laby.getLabyrinthe().getLength(); i++) {
             for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
                 double x = i * caseWidth;
                 double y = j * caseHeight;
-
 
                 gc.drawImage(imgHerbe, x, y, caseWidth, caseHeight);
 
@@ -56,41 +66,44 @@ public class LabyDessin implements DessinJeu {
                     gc.drawImage(imgPiege, x, y, caseWidth, caseHeight);
                 }
 
-                if (laby.getLabyrinthe().contientCase(Teleporteur.class, i, j) && laby.getLabyrinthe().etreClear()) {
+                if (laby.getLabyrinthe().contientCase(Teleporteur.class, i, j)
+                        && laby.getLabyrinthe().etreClear()) {
                     gc.drawImage(imgTeleporteur, x, y, caseWidth, caseHeight);
                 }
             }
         }
+
+        // Affichage du joueur et des zombies
         for (int i = 0; i < laby.getLabyrinthe().getLength(); i++) {
             for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
                 double x = i * caseWidth;
                 double y = j * caseHeight;
-                int[] p = {i, j} ;
+                int[] p = {i, j};
 
                 if (laby.getLabyrinthe().pj.etrePresent(p)) {
-                    switch(laby.getLabyrinthe().pj.ancienM) {
+                    switch (laby.getLabyrinthe().pj.ancienM) {
                         case HAUT:
                             gc.drawImage(imgPersoH, x, y, caseWidth, caseHeight);
                             if (laby.getLabyrinthe().pj.avoirAttaque) {
-                                gc.drawImage(imgCoup, x, y-caseHeight, caseWidth, caseHeight) ;
+                                gc.drawImage(imgCoup, x, y - caseHeight, caseWidth, caseHeight);
                             }
                             break;
                         case BAS:
                             gc.drawImage(imgPersoB, x, y, caseWidth, caseHeight);
                             if (laby.getLabyrinthe().pj.avoirAttaque) {
-                                gc.drawImage(imgCoup, x, y+caseHeight, caseWidth, caseHeight) ;
+                                gc.drawImage(imgCoup, x, y + caseHeight, caseWidth, caseHeight);
                             }
                             break;
                         case GAUCHE:
                             gc.drawImage(imgPersoG, x, y, caseWidth, caseHeight);
                             if (laby.getLabyrinthe().pj.avoirAttaque) {
-                                gc.drawImage(imgCoup, x-caseWidth, y, caseWidth, caseHeight) ;
+                                gc.drawImage(imgCoup, x - caseWidth, y, caseWidth, caseHeight);
                             }
                             break;
                         case DROITE:
                             gc.drawImage(imgPersoD, x, y, caseWidth, caseHeight);
                             if (laby.getLabyrinthe().pj.avoirAttaque) {
-                                gc.drawImage(imgCoup, x+caseWidth, y, caseWidth, caseHeight) ;
+                                gc.drawImage(imgCoup, x + caseWidth, y, caseWidth, caseHeight);
                             }
                             break;
                         default:
@@ -100,7 +113,7 @@ public class LabyDessin implements DessinJeu {
                 }
 
                 if (laby.getLabyrinthe().getZombie(i, j) != null) {
-                    switch(laby.getLabyrinthe().getZombie(i,j).ancienM) {
+                    switch (laby.getLabyrinthe().getZombie(i, j).ancienM) {
                         case HAUT:
                             gc.drawImage(imgZombieH, x, y, caseWidth, caseHeight);
                             break;
@@ -117,9 +130,10 @@ public class LabyDessin implements DessinJeu {
                             gc.drawImage(imgZombieB, x, y, caseWidth, caseHeight);
                     }
                 }
-
             }
         }
+
+        // Affichage des murs
         for (int i = 0; i < laby.getLabyrinthe().getLength(); i++) {
             for (int j = 0; j < laby.getLabyrinthe().getLengthY(); j++) {
                 double x = i * caseWidth;
